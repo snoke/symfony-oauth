@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello GoogleAuthController!{% endblock %}
+
+{% block javascripts %}
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script>
+        function handleCredentialResponse(response) {
+            const id_token = response.credential;
+            window.location.href = '/auth/google/' + id_token;
+        }
+        window.onload = function() {
+            google.accounts.id.initialize({
+                client_id: '325144873900-s2eib0vh981tol0ukm5u1q7pscl8qmsh.apps.googleusercontent.com',
+                callback: handleCredentialResponse
+            });
+            google.accounts.id.renderButton(
+                document.getElementById('google-sign-in'),
+                { theme: 'inline',width:'220px'}
+            );
+        };
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div id="google-sign-in" style="width:220px;" ></div>
+{% endblock %}
