@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace Snoke\OAuth\Controller;
 
 use Firebase\JWT\Key;
 use GuzzleHttp\Client;
@@ -15,9 +15,7 @@ class GoogleAuthController extends AbstractController
     #[Route('/auth/google', name: 'app_google_auth')]
     public function auth(): Response
     {
-        return $this->render('google_auth/index.html.twig', [
-            'controller_name' => 'GoogleAuthController',
-        ]);
+        return $this->render('google_auth/index.html.twig');
     }
 
     public function decodeIdToken($idToken) {
