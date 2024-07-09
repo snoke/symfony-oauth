@@ -12,8 +12,8 @@ class SnokeOAuthExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
+        $container->setParameter('snoke_o_auth', $config);
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yaml');
-        $loader->load('routes.yaml');
     }
 }

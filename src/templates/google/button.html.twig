@@ -1,0 +1,19 @@
+
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+    function handleCredentialResponse(response) {
+        const id_token = response.credential;
+        window.location.href =  '{{ oauthSuccess('google')|replace({'$token': '\'+ id_token + \''})|raw }}';
+    }
+    window.onload = function() {
+        google.accounts.id.initialize({
+            client_id: '{{ oauthApiKey("google") }}',
+            callback: handleCredentialResponse
+        });
+        google.accounts.id.renderButton(
+            document.getElementById('google-sign-in'),
+                {{ oauthStyle('google')|raw }}
+        );
+    };
+</script>
+<div id="google-sign-in"></div>
