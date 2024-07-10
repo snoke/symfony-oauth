@@ -32,7 +32,7 @@ snoke_o_auth:
 
 ## Usage
 ### frontend
-add the following line to your twig template where you want the google button to appear
+add the following line to your twig template where you want the sign in button to appear
 #### github:
 ```twig
 {% include '@snoke_oauth/github/button.html.twig' %}
