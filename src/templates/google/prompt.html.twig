@@ -1,0 +1,17 @@
+
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+    function handleCredentialResponse(response) {
+        const id_token = response.credential;
+        window.location.href =  '{{ oauthRedirectUri('google')|replace({'$token': '\'+ id_token + \''})|raw }}';
+    }
+    window.onload = function() {
+        google.accounts.id.initialize({
+            client_id: '{{ oauthClientID("google") }}',
+            callback: handleCredentialResponse
+        });
+        google.accounts.id.prompt()
+    };
+</script>
+
+<div id="google-sign-in"></div>

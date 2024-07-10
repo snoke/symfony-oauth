@@ -3,17 +3,27 @@
 <script>
     function handleCredentialResponse(response) {
         const id_token = response.credential;
-        window.location.href =  '{{ oauthSuccess('google')|replace({'$token': '\'+ id_token + \''})|raw }}';
+        window.location.href =  '{{ oauthRedirectUri('google')|replace({'$token': '\'+ id_token + \''})|raw }}';
     }
     window.onload = function() {
         google.accounts.id.initialize({
-            client_id: '{{ oauthApiKey("google") }}',
+            client_id: '{{ oauthClientID("google") }}',
             callback: handleCredentialResponse
         });
         google.accounts.id.renderButton(
             document.getElementById('google-sign-in'),
-                {{ oauthStyle('google')|raw }}
+            {
+                theme: '{{ theme|default("outline") }}',
+                width: '{{ width|default("120px") }}',
+                locale: '{{ locale|default("en_EN") }}',
+                type: '{{ type|default("standard") }}',
+                size: '{{ size|default("medium") }}',
+                text: '{{ text|default("signin_with") }}',
+                shape: '{{ shape|default("rectangular") }}',
+                logo_alignment: '{{ logo_alignment|default("left") }}',
+            }
         );
     };
 </script>
+
 <div id="google-sign-in"></div>

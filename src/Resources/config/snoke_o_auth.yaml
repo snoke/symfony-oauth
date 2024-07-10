@@ -1,13 +1,8 @@
 snoke_o_auth:
+  github:
+    client_id:
+    redirect_uri: 'http://localhost/callback'
+    secret:
   google:
-    apiKey:
-    success: '/success/$token'
-    style:
-      theme: 'outline'        # outline / fill_blue / filled_black
-      width: '120px'          # width in pixel
-      locale: 'en_EN'	      # locale
-      type: 'standard' 	      # standard / icon
-      size: 'medium' 	      # small / medium / large
-      text: 'signin'	      # signin / continue_with / signup_with / signin_with
-      shape: 'rectangular'    # rectangular / pill / circle / square
-      logo_alignment: 'left'  # left / center
+    client_id:
+    redirect_uri: 'auth/google/$token'

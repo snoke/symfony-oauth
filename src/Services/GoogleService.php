@@ -8,20 +8,20 @@ use GuzzleHttp\Exception\GuzzleException;
 use phpseclib\Crypt\RSA;
 use Firebase\JWT\JWT;
 use phpseclib\Math\BigInteger;
-use Snoke\OAuth\Exception\AuthServerNotAvailableException;
+use Snoke\OAuth\Exception\AuthServerException;
 
 class GoogleService
 {
     /**
-     * @throws AuthServerNotAvailableException
+     * @throws AuthServerException
      */
-    public function decodeToken($idToken): array
+    public function getUser($idToken): array
     {
         $client = new Client();
         try {
             $response = $client->get('https://www.googleapis.com/oauth2/v3/certs');
         } catch (GuzzleException $e) {
-            throw new AuthServerNotAvailableException('could not fetch certificates from https://www.googleapis.com/oauth2/v3/certs');
+            throw new AuthServerException('could not fetch certificates from https://www.googleapis.com/oauth2/v3/certs');
         }
         $certs = json_decode($response->getBody(), true);
         // Google certificates are in array, we need to get the correct one to verify the token
