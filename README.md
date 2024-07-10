@@ -50,15 +50,14 @@ styling is possible by twig variables:
 
 ![](./Docs/Images/buttons_black.PNG)
 
-following styling options:
+following styling options are provied:
 ```
-    style:
       theme: 'outline'        # outline|filled_blue|filled_black
       width: '120px'          # width
       locale: 'en_EN'	      # locale (only for google)
       type: 'standard' 	      # standard|icon
       size: 'medium' 	      # small|medium|large
-      text: 'signin'	      # github: your text> google: signin|continue_with|signup_with|signin_with
+      text: 'signin'	      # github: <your text> - google: signin|continue_with|signup_with|signin_with
       shape: 'rectangular'    # rectangular|pill|circle|square
       logo_alignment: 'left'  # left|center
 ```
