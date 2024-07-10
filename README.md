@@ -1,5 +1,6 @@
 ﻿# symfony-oauth
-Symfony OAuth Client Bundle for fast integration of (yet only) Google and Github OAut2h Services
+Symfony OAuth2 Cliemt Bundle for fast integration of (yet only) Github and Google OAuth Service 
+
 ## Installation
 add the custom repository to composer.json
 ```
