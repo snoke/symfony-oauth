@@ -3,7 +3,7 @@
 <script>
     function handleCredentialResponse(response) {
         const id_token = response.credential;
-        window.location.href =  '{{ oauthRedirectUri('google')|replace({'$token': '\'+ id_token + \''})|raw }}';
+        window.location.href =  '{{ oauthRedirectUri('google')|raw }}?token='+ id_token ;
     }
     window.onload = function() {
         google.accounts.id.initialize({

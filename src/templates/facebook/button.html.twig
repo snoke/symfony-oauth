@@ -1,0 +1,163 @@
+
+{% if theme|default("outline") == "outline" %}
+    {% set width = width|default('50')|number_format-2 %}
+{% endif %}
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '{{ oauthClientID('facebook') }}',
+            cookie     : true,
+            xfbml      : true,
+            version    : 'v12.0'
+        });
+
+        FB.AppEvents.logPageView();
+    };
+
+    function authorizeFacebook() {
+        FB.getLoginStatus(function(response) {
+            statusChangeCallback(response);
+        });
+    }
+
+    function statusChangeCallback(response) {
+        if (response.status === 'connected') {
+            var accessToken = response.authResponse.accessToken;
+            window.location.href = '{{ oauthRedirectUri('facebook') }}?access_token=' + accessToken;
+        } else {
+            FB.login(function(response) {
+                if (response.authResponse) {
+                    var accessToken = response.authResponse.accessToken;
+                    window.location.href = '{{ oauthRedirectUri('facebook') }}?access_token=' + accessToken;
+                }
+            }, {scope: 'public_profile,email'});
+        }
+    }
+</script>
+
+<div class="container" onclick="authorizeFacebook()" style="
+        overflow: hidden;
+{% if shape|default("rectangular") == "rectangular" %}
+        border-radius: 4px;
+{% elseif shape|default("rectangle") == "circle" %}
+        border-radius: 32px;
+{% elseif shape|default("rectangle") == "square" %}
+        border-radius: 4px;
+{% elseif shape|default("rectangle") == "pill" %}
+        border-radius: 20px;
+            {% endif %};
+{% if theme|default("outline") == "filled_blue" %}
+{% elseif theme|default("outline") == "filled_black" %}
+{% else %}
+        border: 1px solid #dadce0;
+{% endif %}
+        {% if theme|default("outline") == "filled_blue" %}
+                background-color:#1a73e8;
+        {% elseif theme|default("outline") == "filled_black" %}
+                background-color:#202124;
+        {% else %}
+                background-color:white;
+        {% endif %}
+        display: flex;
+{% if logo_alignment|default("left") == "center" %}
+        align-items: center;
+        justify-content: center;
+{% endif %}
+        align-items: center;
+{% if size|default("medium") == "medium" %}
+        height: 32px;
+{% elseif size|default("medium") == "small" %}
+        height: 20px;
+{% elseif size|default("medium") == "large" %}
+        height: 38px;
+{% endif %}
+        {% if type|default("default") == "default" %}width: {{ width|default("50") }}px;{% endif %}
+        ">
+    <div class="inner-container" style="
+            display: flex;
+            align-items: center;
+            height: 100%;
+    {% if logo_alignment|default("left") == "center" %}margin-left: 50%;margin-right: 50%; {% endif %}
+            min-width:  {% if type|default("default") == "default" %}{{ width|default("50") }}px{% else %}{% if size|default("medium") == "medium" %}32px{% elseif size|default("medium") == "small" %}20px{% elseif size|default("medium") == "large" %}40px{% endif %};{% endif %};
+            padding:1px;">
+
+
+        {% if theme|default("outline") == "outline" %}
+        <svg style="
+                padding-top: 3px;
+                padding-bottom: 3px;
+                flex-shrink: 0;
+                background-color: white;
+                border-top-left-radius: 3px;
+                border-bottom-left-radius: 3px;
+        {% if logo_alignment|default("left") == "left" %}max-width: 100%; {% endif %}
+                height:75%;
+        {% if size|default("medium") == "large" %}width: 36px; {% endif %}
+            {% if size|default("medium") == "small" %}width: 16px; {% endif %}
+            {% if size|default("medium") == "medium" %}width: 28px; {% endif %}
+                "
+             version="1.2" baseProfile="tiny"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+             x="0px" y="0px" width="36px" height="36px" viewBox="0 0 36 36" xml:space="preserve">
+            <rect fill="#3B5998" width="36" height="36"/>
+            <path fill="#FFFFFF" d="M30.895,16.535l-0.553,5.23h-4.181v15.176h-6.28V21.766H16.75v-5.23h3.131v-3.149
+	c0-4.254,1.768-6.796,6.796-6.796h4.181v5.23h-2.615c-1.952,0-2.081,0.736-2.081,2.1v2.615H30.895z"/>
+</svg>
+        {% else %}
+        <svg
+                style="
+
+                {% if size|default("medium") == "large" %}width: 36px; {% endif %}
+            {% if size|default("medium") == "small" %}width: 16px; {% endif %}
+            {% if size|default("medium") == "medium" %}width: 28px; {% endif %}
+                        padding-top: 3px;
+                        padding-bottom: 3px;
+                        flex-shrink: 0;
+                        background-color: white;
+                        border-top-left-radius: 3px;
+                        border-bottom-left-radius: 3px;
+                {% if logo_alignment|default("left") == "left" %}max-width: 100%; {% endif %}
+                        height:75%;
+                        "
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="facebook"><path fill="#1976D2" fill-rule="evenodd" d="M12 5.5H9v-2a1 1 0 0 1 1-1h1V0H9a3 3 0 0 0-3 3v2.5H4V8h2v8h3V8h2l1-2.5z" clip-rule="evenodd"></path></svg>
+      {% endif %}
+
+
+        {% if type|default("default") == "default" %}
+            <div style="padding-left: 8px;padding-right: 8px;
+                    white-space: nowrap;
+                    text-align: center;
+                    width: 100%;
+            {% if theme|default("outline") == "filled_blue" %}
+                    color: white;
+            {% elseif theme|default("outline") == "filled_black" %}
+                    color: white;
+            {% else %}
+                    color: #3c4043;
+            {% endif %}
+
+                    {% if size|default("medium") == "small" %}
+
+                            font-weight:400;
+                            font-size: 11px;
+                            letter-spacing: 0.3px;
+                    {% elseif size|default("medium") == "large" %}
+
+                            font-weight:500;
+                            font-size: 14px;
+                            letter-spacing: 0.25px;
+                    {% else %}
+
+                            font-weight:500;
+                            font-size: 14px;
+                            letter-spacing: 0.25px;
+                    {% endif %}
+                    font-family: 'Google Sans', arial, sans-serif;
+                   ">
+                {{ text|default("Über Facebook anmelden") }}
+            </div>
+        {% endif %}
+    </div>
+</div>

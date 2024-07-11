@@ -38,6 +38,14 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('secret')->end()
             ->scalarNode('redirect_uri')->end()
             ->end()
+            ->end()
+            ->arrayNode('facebook')
+            ->children()
+            ->scalarNode('client_id')->end()
+            ->scalarNode('secret')->end()
+            ->scalarNode('redirect_uri')->end()
+            ->end()
+            ->end()
             ->end();
 
         return $treeBuilder;

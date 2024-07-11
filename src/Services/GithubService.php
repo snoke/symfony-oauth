@@ -38,7 +38,6 @@ class GithubService
             'state' => $_GET['state']
         ];
 
-
         $response = $this->client->post($tokenUrl, [
             'headers' => ['Content-Type' => 'application/x-www-form-urlencoded'],
             'form_params' => $postData,

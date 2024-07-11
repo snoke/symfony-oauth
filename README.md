@@ -1,6 +1,7 @@
 ﻿# symfony-oauth
-Symfony OAuth2 Cliemt Bundle for fast integration of (yet only) Github and Google OAuth Service 
+Symfony OAuth2 Cliemt Bundle for fast integration of Github, Facebook and Google OAuth Service
 
+(yet only supporting default scopes to get user login infos)
 ## Installation
 add the custom repository to composer.json
 ```
@@ -17,18 +18,22 @@ install
 ## Configuration
 edit ```config/packages/snoke_o_auth.yaml``` 
 - set your **client-id** (aka api-key)
-- set a redirect target **redirect_uri** after successful login
-($token placeholder will be replaced automatically by the google auth token)
+- set a redirect target **redirect_uri** after successful login (must be fqdn)
+- set your **secret**
 
 ```yaml
 snoke_o_auth:
   google:
     secret: '<your google client secret>'
     client_id: '<your google client-id>'
-    redirect_uri: '<your redirect uri>/$token' # must containt $token which will be replaced by the actual token
+    redirect_uri: '<your redirect uri>' 
   github:
     client_id: '<your github client-id >'
-    redirect_uri: '<your redirect uri>' # token will be added as query parameter
+    redirect_uri: '<your redirect uri>'
+  facebook:
+    secret: '<your google client secret>'
+    client_id: '<your github client-id >'
+    redirect_uri: '<your redirect uri>'
 ```
 
 ## Usage
@@ -48,6 +53,7 @@ styling is possible with twig variables:
 ```twig
 {% include '@snoke_oauth/google/button.html.twig' with {theme:'filled_black', text: 'signin_with' %}
 {% include '@snoke_oauth/github/button.html.twig' with {theme:'filled_black', text: 'Sign in with Github' %}
+{% include '@snoke_oauth/facebook/button.html.twig' with {theme:'filled_black', text: 'Sign in with Facebook' %}
 ```
 
 ![](./Docs/Images/buttons_black.PNG)
@@ -65,10 +71,11 @@ following styling options are provied:
 ```
 
 ### backend
-decode the token using the GoogleService and GithubService provided in this bundle
+decode the token using the Services provided in this bundle
 ```php
 use Snoke\OAuth\Services\GithubService;
 use Snoke\OAuth\Services\GoogleService;
+use Snoke\OAuth\Services\FacebookService;
 
 class AuthController extends AbstractController
 {
@@ -77,13 +84,20 @@ class AuthController extends AbstractController
     public function githubcallback(GithubService $githubService): Response
     {
         $claim = $githubService->getUser();
-        $message = 'hello ' . $claim["name"]
+        $userEmail = $claim['email'];
         // ...
     }
-    #[Route('/google_redirect_uri/{token}', name: 'auth_google_callback')]
+    #[Route('/facebook_redirect_uri', name: 'auth_facebook_callback')]
+    public function facebookcallback(FacebookService $facebookService): Response
+    {
+        $claim = $facebookService->getUser();
+        $userEmail = $claim['email'];
+        // ...
+    }
+    #[Route('/google_redirect_uri', name: 'auth_google_callback')]
     public function googlecallback(GoogleService $googleService, string $token): Response
     {
-        $claim = $googleService->getUser($token);
+        $claim = $googleService->getUser();
         $userEmail = $claim['email'];
         // ...
 ```

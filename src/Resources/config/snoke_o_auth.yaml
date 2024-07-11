@@ -1,8 +1,12 @@
 snoke_o_auth:
   github:
     client_id:
-    redirect_uri: 'http://localhost/callback'
+    redirect_uri: 'auth/github'
     secret:
   google:
     client_id:
-    redirect_uri: 'auth/google/$token'
+    redirect_uri: 'auth/google'
+  facebook:
+    client_id:
+    secret:
+    redirect_uri: '/auth/facebook'

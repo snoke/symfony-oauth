@@ -15,8 +15,9 @@ class GoogleService
     /**
      * @throws AuthServerException
      */
-    public function getUser($idToken): array
+    public function getUser($token = null): array
     {
+        $token = $token ?? $_GET['token'];
         $client = new Client();
         try {
             $response = $client->get('https://www.googleapis.com/oauth2/v3/certs');
@@ -33,10 +34,10 @@ class GoogleService
         }
 
         // Decode the token header to find the key id (kid)
-        $tokenParts = explode('.', $idToken);
+        $tokenParts = explode('.', $token);
         $header = json_decode(base64_decode($tokenParts[0]), true);
 
-        return (array)JWT::decode($idToken, $keys[$header['kid']]);
+        return (array)JWT::decode($token, $keys[$header['kid']]);
     }
 
     private function createPemFromModulusAndExponent($n, $e): false|string|array
