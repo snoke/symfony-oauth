@@ -72,7 +72,7 @@ following styling options are provied:
       locale: 'en_EN'	      # locale (only for google)
       type: 'standard' 	      # standard|icon
       size: 'medium' 	      # small|medium|large
-      text: 'signin'	      # github: <your button text> - google: signin|continue_with|signup_with|signin_with
+      text: 'signin'	      # facebook|github: <your button text> - google: signin|continue_with|signup_with|signin_with
       shape: 'rectangular'    # rectangular|pill|circle|square
       logo_alignment: 'left'  # left|center
 ```
