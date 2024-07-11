@@ -12,7 +12,7 @@ add the custom repository to composer.json
 ],
 ```
 install
-```composer req snoke/symfony-oauth```
+```composer req snoke/symfony-oauth:dev-master```
 
 ## Configuration
 edit ```config/packages/snoke_o_auth.yaml``` 
