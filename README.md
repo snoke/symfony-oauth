@@ -1,5 +1,5 @@
 ﻿# symfony-oauth
-Lightweight Symfony OAuth2 Client Bundle for Fast Integration of GitHub, Facebook, and Google OAuth Services with pre-styled Buttons for consistency
+lightweight Symfony OAuth2 Client Bundle for fast integration of GitHub, Facebook, and Google OAuth services with pre-styled buttons for consistency
 
 ## Installation
 add the custom repository to composer.json
