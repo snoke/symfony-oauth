@@ -1,14 +1,12 @@
 
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script>
-    function handleCredentialResponse(response) {
-        const id_token = response.credential;
-        window.location.href =  '{{ oauthRedirectUri('google')|raw }}?token='+ id_token ;
-    }
     window.onload = function() {
         google.accounts.id.initialize({
             client_id: '{{ oauthClientID("google") }}',
-            callback: handleCredentialResponse
+            callback: (response) => {
+                window.location.href =  '{{ oauthRedirectUri('google')|raw }}?token='+ response.credential
+            }
         });
         google.accounts.id.renderButton(
             document.getElementById('google-sign-in'),
@@ -25,5 +23,14 @@
         );
     };
 </script>
-
-<div id="google-sign-in" style="overflow:hidden;"></div>
+<div id="google-sign-in" style="overflow:hidden;
+{% if type|default('standard') == 'icon' %}
+{% if size|default('medium') == 'large' %}
+    width:40px;
+{% elseif size|default('medium') == 'medium' %}
+        width:32px;
+{% elseif size|default('medium') == 'small' %}
+        width:20px;
+{% endif %}
+{% endif %}
+"></div>

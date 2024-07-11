@@ -1,9 +1,42 @@
+{% set containerWidth = width|default(200) %}
 
 {% if theme|default("outline") == "outline" %}
-    {% set width = width|default('270')|number_format-2 %}
+    {% if size|default("medium") == "large" %}
+        {% set containerHeight = 38 %}
+        {% set iconWidth = 36 %}
+        {% set padding = 2 %}
+    {% elseif size|default("medium") == "medium" %}
+        {% set containerHeight = 30 %}
+        {% set iconWidth = 28 %}
+        {% set padding = 2 %}
+    {% elseif size|default("medium") == "small" %}
+        {% set containerHeight = 18 %}
+        {% set iconWidth = 16 %}
+        {% set padding = 2 %}
+    {% endif %}
+{% else %}
+    {% if size|default("medium") == "large" %}
+        {% set containerHeight = 40 %}
+        {% set iconWidth = 36 %}
+        {% set padding = 2 %}
+    {% elseif size|default("medium") == "medium" %}
+        {% set containerHeight = 32 %}
+        {% set iconWidth = 28 %}
+        {% set padding = 2 %}
+    {% elseif size|default("medium") == "small" %}
+        {% set containerHeight = 20 %}
+        {% set iconWidth = 16 %}
+        {% set padding = 2 %}
+    {% endif %}
 {% endif %}
-<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+{% if type|default("default") == "icon" %}
+    {% if theme|default("default") == "outline" %}
+        {% set padding = 1 %}
+    {% endif %}
+    {% set containerWidth = iconWidth + 2 * padding %}
+{% endif %}
 
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
 <script>
     window.fbAsyncInit = function() {
@@ -38,25 +71,28 @@
     }
 </script>
 
-<div class="container" onclick="authorizeFacebook()" style="
-        cursor: pointer;
-        width:  {% if type|default("default") == "default" %}{{ width|default("270") }}px{% else %}{% if size|default("medium") == "medium" %}30px{% elseif size|default("medium") == "small" %}18px{% elseif size|default("medium") == "large" %}38px{% endif %};{% endif %};
+<div id="facebook-sign-in" style="text-decoration:none;" onclick="authorizeFacebook()">{% block button %}
+        <div class="container" style="cursor: pointer;
 
-        overflow: hidden;
-{% if shape|default("rectangular") == "rectangular" %}
-        border-radius: 4px;
-{% elseif shape|default("rectangle") == "circle" %}
-        border-radius: 32px;
-{% elseif shape|default("rectangle") == "square" %}
-        border-radius: 4px;
-{% elseif shape|default("rectangle") == "pill" %}
-        border-radius: 20px;
+                width:{{ containerWidth }}px;
+                height:{{ containerHeight }}px;
+
+                overflow: hidden;
+        {% if shape|default("rectangular") == "rectangular" %}
+                border-radius: 4px;
+        {% elseif shape|default("rectangle") == "circle" %}
+                border-radius: 32px;
+        {% elseif shape|default("rectangle") == "square" %}
+                border-radius: 4px;
+        {% elseif shape|default("rectangle") == "pill" %}
+                border-radius: 20px;
             {% endif %};
-{% if theme|default("outline") == "filled_blue" %}
-{% elseif theme|default("outline") == "filled_black" %}
-{% else %}
-        border: 1px solid #dadce0;
-{% endif %}
+
+        {% if theme|default("outline") == "filled_blue" %}
+        {% elseif theme|default("outline") == "filled_black" %}
+        {% else %}
+                border: 1px solid #dadce0;
+        {% endif %}
         {% if theme|default("outline") == "filled_blue" %}
                 background-color:#1a73e8;
         {% elseif theme|default("outline") == "filled_black" %}
@@ -64,88 +100,53 @@
         {% else %}
                 background-color:white;
         {% endif %}
-        display: flex;
-{% if logo_alignment|default("left") == "center" %}
-        align-items: center;
-        justify-content: center;
-{% endif %}
-        align-items: center;
-{% if size|default("medium") == "medium" %}
-        height: 32px;
-{% elseif size|default("medium") == "small" %}
-        height: 20px;
-{% elseif size|default("medium") == "large" %}
-        height: 38px;
-{% endif %}
-        {% if type|default("default") == "default" %}width: {{ width|default("270") }}px;{% endif %}
-        ">
-    <div class="inner-container" style="
-            {% if size|default("medium") == 'small' %}
-            height: 12px;
-            {% elseif size|default("medium") == 'medium' %}
-                    height: 30px;
-            {% elseif size|default("medium") == 'large' %}
-                    height: 38px;
-            {% endif %}
-            display: flex;
-            align-items: center;
-    {% if logo_alignment|default("left") == "center" %}margin-left: 50%;margin-right: 50%; {% endif %}
-            width:  {% if type|default("default") == "default" %}{{ width|default("270") }}px{% else %}{% if size|default("medium") == "medium" %}32px{% elseif size|default("medium") == "small" %}20px{% elseif size|default("medium") == "large" %}40px{% endif %};{% endif %};
-            padding:2px;">
+                display: flex;
+        {% if logo_alignment|default("left") == "center" %}
+                align-items: center;
+                justify-content: center;
+        {% endif %}
+                align-items: center;
+        {% if type|default("default") == "default" %}width: {{ width|default('270') }}px;{% endif %}
+                ">
+            <div class="inner-container" style="
+                    display: flex;
+                    align-items: center;
+
+            {% if logo_alignment|default("left") == "center" %}margin-left: 50%;margin-right: 50%; {% endif %}
+                    width:  {% if type|default("default") == "default" %}{{ width|default('270') }}px{% else %}{% if size|default("medium") == "medium" %}32px{% elseif size|default("medium") == "small" %}20px{% elseif size|default("medium") == "large" %}40px{% endif %};{% endif %};
 
 
-        {% if theme|default("outline") == "outline" %}
-        <svg style="
-                padding-top: 3px;
-                padding-bottom: 3px;
-                flex-shrink: 0;
-                background-color: white;
-                border-top-left-radius: 3px;
-                border-bottom-left-radius: 3px;
-        {% if logo_alignment|default("left") == "left" %}max-width: 100%; {% endif %}
-                height:75%;
-        {% if size|default("medium") == "large" %}width: 36px; {% endif %}
-            {% if size|default("medium") == "small" %}width: 16px; {% endif %}
-            {% if size|default("medium") == "medium" %}width: 28px; {% endif %}
-                "
-             version="1.2" baseProfile="tiny"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-             x="0px" y="0px" width="36px" height="36px" viewBox="0 0 36 36" xml:space="preserve">
-            <rect fill="#3B5998" width="36" height="36"/>
-            <path fill="#FFFFFF" d="M30.895,16.535l-0.553,5.23h-4.181v15.176h-6.28V21.766H16.75v-5.23h3.131v-3.149
-	c0-4.254,1.768-6.796,6.796-6.796h4.181v5.23h-2.615c-1.952,0-2.081,0.736-2.081,2.1v2.615H30.895z"/>
-</svg>
-        {% else %}
-        <svg
-                style="
-
-                {% if size|default("medium") == "large" %}width: 36px; {% endif %}
-            {% if size|default("medium") == "small" %}width: 16px; {% endif %}
-            {% if size|default("medium") == "medium" %}width: 28px; {% endif %}
-                        padding-top: 3px;
-                        padding-bottom: 3px;
+                    padding:{{ padding }}px;
+                    ">
+                <svg style="
                         flex-shrink: 0;
                         background-color: white;
                         border-top-left-radius: 3px;
                         border-bottom-left-radius: 3px;
-                {% if logo_alignment|default("left") == "left" %}max-width: 100%; {% endif %}
-                        height:75%;
-                        "
-                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="facebook"><path fill="#1976D2" fill-rule="evenodd" d="M12 5.5H9v-2a1 1 0 0 1 1-1h1V0H9a3 3 0 0 0-3 3v2.5H4V8h2v8h3V8h2l1-2.5z" clip-rule="evenodd"></path></svg>
-      {% endif %}
+                {% if type|default("default") == "icon" %}
+                        border-top-right-radius: 3px;
+                        border-bottom-right-radius: 3px;
+                {% endif %}
+                {% if logo_alignment|default("left") == "left" %} {% endif %}
+                    width:{{ iconWidth }}px;
+                        {% if theme|default('outline') == 'filled_blue' %}
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="facebook"><path fill="#1976D2" fill-rule="evenodd" d="M12 5.5H9v-2a1 1 0 0 1 1-1h1V0H9a3 3 0 0 0-3 3v2.5H4V8h2v8h3V8h2l1-2.5z" clip-rule="evenodd"></path></svg>
+                        {% else %}
+                xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 509 509"><g fill-rule="nonzero"><path fill="#0866FF" d="M509 254.5C509 113.94 395.06 0 254.5 0S0 113.94 0 254.5C0 373.86 82.17 474 193.02 501.51V332.27h-52.48V254.5h52.48v-33.51c0-86.63 39.2-126.78 124.24-126.78 16.13 0 43.95 3.17 55.33 6.33v70.5c-6.01-.63-16.44-.95-29.4-.95-41.73 0-57.86 15.81-57.86 56.91v27.5h83.13l-14.28 77.77h-68.85v174.87C411.35 491.92 509 384.62 509 254.5z"/><path fill="#fff" d="M354.18 332.27l14.28-77.77h-83.13V227c0-41.1 16.13-56.91 57.86-56.91 12.96 0 23.39.32 29.4.95v-70.5c-11.38-3.16-39.2-6.33-55.33-6.33-85.04 0-124.24 40.16-124.24 126.78v33.51h-52.48v77.77h52.48v169.24c19.69 4.88 40.28 7.49 61.48 7.49 10.44 0 20.72-.64 30.83-1.86V332.27h68.85z"/></g></svg>
 
-
-        {% if type|default("default") == "default" %}
-            <div style="padding-left: 8px;padding-right: 8px;
-                    white-space: nowrap;
-                    text-align: center;
-                    width: 100%;
-            {% if theme|default("outline") == "filled_blue" %}
-                    color: white;
-            {% elseif theme|default("outline") == "filled_black" %}
-                    color: white;
-            {% else %}
-                    color: #3c4043;
-            {% endif %}
+                {% endif %}
+                {% if type|default("default") == "default" %}
+                    <div style="padding-left: 8px;padding-right: 8px;
+                            white-space: nowrap;
+                            text-align: center;
+                            width: 100%;
+                    {% if theme|default("outline") == "filled_blue" %}
+                            color: white;
+                    {% elseif theme|default("outline") == "filled_black" %}
+                            color: white;
+                    {% else %}
+                            color: #3c4043;
+                    {% endif %}
 
                     {% if size|default("medium") == "small" %}
 
@@ -163,10 +164,12 @@
                             font-size: 14px;
                             letter-spacing: 0.25px;
                     {% endif %}
-                    font-family: 'Google Sans', arial, sans-serif;
-                   ">
-                {{ text|default("Über Facebook anmelden") }}
+                            font-family: 'Google Sans', arial, sans-serif;
+                            ">
+                        {{ text|default("Sign up with Facebook") }}
+                    </div>
+                {% endif %}
             </div>
-        {% endif %}
-    </div>
+        </div>
+    {% endblock %}
 </div>

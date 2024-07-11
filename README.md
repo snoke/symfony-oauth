@@ -58,6 +58,15 @@ styling is possible with twig variables:
 
 ![](./Docs/Images/buttons_black.PNG)
 
+```twig
+
+{% include '@snoke_oauth/github/button.html.twig' with {type:'icon', theme:'filled_black',size:'large'}  %}
+{% include '@snoke_oauth/google/button.html.twig' with { type:'icon',theme:'outline',size:'large'}  %}
+{% include '@snoke_oauth/facebook/button.html.twig' with {type:'icon', theme:'filled_blue',size:'large'}  %}
+```
+
+![](./Docs/Images/icons.PNG)
+
 following styling options are provied:
 ```
       theme: 'outline'        # outline|filled_blue|filled_black

@@ -1,16 +1,52 @@
+{% set containerWidth = width|default(200) %}
 
 {% if theme|default("outline") == "outline" %}
-{% set width = width|default('270')|number_format-2 %}
+    {% if size|default("medium") == "large" %}
+        {% set containerHeight = 38 %}
+        {% set iconWidth = 36 %}
+        {% set padding = 2 %}
+    {% elseif size|default("medium") == "medium" %}
+        {% set containerHeight = 30 %}
+        {% set iconWidth = 28 %}
+        {% set padding = 2 %}
+    {% elseif size|default("medium") == "small" %}
+        {% set containerHeight = 18 %}
+        {% set iconWidth = 16 %}
+        {% set padding = 2 %}
+    {% endif %}
+{% else %}
+    {% if size|default("medium") == "large" %}
+        {% set containerHeight = 40 %}
+        {% set iconWidth = 36 %}
+        {% set padding = 2 %}
+    {% elseif size|default("medium") == "medium" %}
+        {% set containerHeight = 32 %}
+        {% set iconWidth = 28 %}
+        {% set padding = 2 %}
+    {% elseif size|default("medium") == "small" %}
+        {% set containerHeight = 20 %}
+        {% set iconWidth = 16 %}
+        {% set padding = 2 %}
+    {% endif %}
 {% endif %}
+{% if type|default("default") == "icon" %}
+    {% if theme|default("default") == "outline" %}
+        {% set padding = 1 %}
+    {% endif %}
+    {% set containerWidth = iconWidth + 2 * padding %}
+{% endif %}
+
 <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <script>
     function authorizeGithub() {
-        window.location.href="{{ oauthAuthorizeUrl() }}"
+        window.location.href="https://github.com/login/oauth/authorize?client_id={{ oauthClientID('github') }}&scope=user&state={{ oauthState('github') }}&redirect_uri={{ oauthRedirectUri('github') }}"
     }
 </script>
 <div id="github-sign-in" style="text-decoration:none;" onclick="authorizeGithub()">{% block button %}
         <div class="container" style="cursor: pointer;
-                width:  {% if type|default("default") == "default" %}{{ width|default("270") }}px{% else %}{% if size|default("medium") == "medium" %}30px{% elseif size|default("medium") == "small" %}18px{% elseif size|default("medium") == "large" %}38px{% endif %};{% endif %};
+
+                width:{{ containerWidth }}px;
+                height:{{ containerHeight }}px;
 
                 overflow: hidden;
         {% if shape|default("rectangular") == "rectangular" %}
@@ -22,6 +58,7 @@
         {% elseif shape|default("rectangle") == "pill" %}
                 border-radius: 20px;
             {% endif %};
+
         {% if theme|default("outline") == "filled_blue" %}
         {% elseif theme|default("outline") == "filled_black" %}
         {% else %}
@@ -40,43 +77,29 @@
                 justify-content: center;
         {% endif %}
                 align-items: center;
-        {% if size|default("medium") == "medium" %}
-                height: 32px;
-        {% elseif size|default("medium") == "small" %}
-                height: 20px;
-        {% elseif size|default("medium") == "large" %}
-                height: 38px;
-        {% endif %}
         {% if type|default("default") == "default" %}width: {{ width|default('270') }}px;{% endif %}
                 ">
             <div class="inner-container" style="
                     display: flex;
                     align-items: center;
 
-            {% if size|default("medium") == 'small' %}
-                    height: 12px;
-            {% elseif size|default("medium") == 'medium' %}
-                    height: 30px;
-            {% elseif size|default("medium") == 'large' %}
-                    height: 38px;
-            {% endif %}
             {% if logo_alignment|default("left") == "center" %}margin-left: 50%;margin-right: 50%; {% endif %}
-                    min-width:  {% if type|default("default") == "default" %}{{ width|default('270') }}px{% else %}{% if size|default("medium") == "medium" %}32px{% elseif size|default("medium") == "small" %}20px{% elseif size|default("medium") == "large" %}40px{% endif %};{% endif %};
-                    padding:2px;padding-left: 1px;">
+                    width:  {% if type|default("default") == "default" %}{{ width|default('270') }}px{% else %}{% if size|default("medium") == "medium" %}32px{% elseif size|default("medium") == "small" %}20px{% elseif size|default("medium") == "large" %}40px{% endif %};{% endif %};
+
+
+                    padding:{{ padding }}px;
+                    ">
                 <svg style="
-                        padding-top: 3px;
-                        padding-bottom: 3px;
-                        width: 28px;
                         flex-shrink: 0;
                         background-color: white;
                         border-top-left-radius: 3px;
                         border-bottom-left-radius: 3px;
-                {% if logo_alignment|default("left") == "left" %}max-width: 100%; {% endif %}
-                        height:75%;
-
-                {% if size|default("medium") == "large" %}width: 36px; {% endif %}
-            {% if size|default("medium") == "small" %}width: 16px; {% endif %}
-            {% if size|default("medium") == "medium" %}width: 28px; {% endif %}
+                {% if type|default("default") == "icon" %}
+                        border-top-right-radius: 3px;
+                        border-bottom-right-radius: 3px;
+                {% endif %}
+                {% if logo_alignment|default("left") == "left" %} {% endif %}
+                    width:{{ iconWidth }}px;
                         "
                      aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true"
                      class="octicon octicon-mark-github v-align-middle">
@@ -113,7 +136,7 @@
                     {% endif %}
                             font-family: 'Google Sans', arial, sans-serif;
                             ">
-                        {{ text|default("Über Github anmelden") }}
+                        {{ text|default("Sign up with Github") }}
                     </div>
                 {% endif %}
             </div>
