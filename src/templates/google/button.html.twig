@@ -14,7 +14,7 @@
             document.getElementById('google-sign-in'),
             {
                 theme: '{{ theme|default("outline") }}',
-                width: '{{ width|default("120px") }}',
+                width: '{{ width|default("270") }}px',
                 locale: '{{ locale|default("en_EN") }}',
                 type: '{{ type|default("standard") }}',
                 size: '{{ size|default("medium") }}',
@@ -26,4 +26,4 @@
     };
 </script>
 
-<div id="google-sign-in"></div>
+<div id="google-sign-in" style="overflow:hidden;"></div>

@@ -1,6 +1,6 @@
 
 {% if theme|default("outline") == "outline" %}
-{% set width = width|default('50')|number_format-2 %}
+{% set width = width|default('270')|number_format-2 %}
 {% endif %}
 <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <script>
@@ -9,7 +9,9 @@
     }
 </script>
 <div id="github-sign-in" style="text-decoration:none;" onclick="authorizeGithub()">{% block button %}
-        <div class="container" style="
+        <div class="container" style="cursor: pointer;
+                width:  {% if type|default("default") == "default" %}{{ width|default("270") }}px{% else %}{% if size|default("medium") == "medium" %}30px{% elseif size|default("medium") == "small" %}18px{% elseif size|default("medium") == "large" %}38px{% endif %};{% endif %};
+
                 overflow: hidden;
         {% if shape|default("rectangular") == "rectangular" %}
                 border-radius: 4px;
@@ -45,15 +47,22 @@
         {% elseif size|default("medium") == "large" %}
                 height: 38px;
         {% endif %}
-        {% if type|default("default") == "default" %}width: {{ width|default("50") }}px;{% endif %}
+        {% if type|default("default") == "default" %}width: {{ width|default('270') }}px;{% endif %}
                 ">
             <div class="inner-container" style="
                     display: flex;
                     align-items: center;
-                    height: 100%;
+
+            {% if size|default("medium") == 'small' %}
+                    height: 12px;
+            {% elseif size|default("medium") == 'medium' %}
+                    height: 30px;
+            {% elseif size|default("medium") == 'large' %}
+                    height: 38px;
+            {% endif %}
             {% if logo_alignment|default("left") == "center" %}margin-left: 50%;margin-right: 50%; {% endif %}
-                    min-width:  {% if type|default("default") == "default" %}{{ width|default("50") }}px{% else %}{% if size|default("medium") == "medium" %}32px{% elseif size|default("medium") == "small" %}20px{% elseif size|default("medium") == "large" %}40px{% endif %};{% endif %};
-                    padding:1px;">
+                    min-width:  {% if type|default("default") == "default" %}{{ width|default('270') }}px{% else %}{% if size|default("medium") == "medium" %}32px{% elseif size|default("medium") == "small" %}20px{% elseif size|default("medium") == "large" %}40px{% endif %};{% endif %};
+                    padding:2px;padding-left: 1px;">
                 <svg style="
                         padding-top: 3px;
                         padding-bottom: 3px;
