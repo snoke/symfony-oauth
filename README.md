@@ -44,7 +44,7 @@ add the following line to your twig template where you want the sign in button t
 ```
 
 ## styling
-styling is possible by twig variables:
+styling is possible with twig variables:
 ```twig
 {% include '@snoke_oauth/google/button.html.twig' with {theme:'filled_black'%}
 ```
@@ -64,22 +64,23 @@ following styling options are provied:
 ```
 
 ### backend
-decode the token using the GoogleService provided in this bundle
+decode the token using the GoogleService and GithubService provided in this bundle
 ```php
+use Snoke\OAuth\Services\GithubService;
 use Snoke\OAuth\Services\GoogleService;
 
 class AuthController extends AbstractController
 {
 
-    #[Route('/github_redirect_uri', name: 'app_githubcallback')]
+    #[Route('/github_redirect_uri', name: 'auth_github_callback')]
     public function githubcallback(GithubService $githubService): Response
     {
         $claim = $githubService->getUser();
         $message = 'hello ' . $claim["name"]
         // ...
     }
-    #[Route('/google_redirect_uri/{token}', name: 'auth_success')]
-    public function success(GoogleService $googleService, string $token): Response
+    #[Route('/google_redirect_uri/{token}', name: 'auth_google_callback')]
+    public function googlecallback(GoogleService $googleService, string $token): Response
     {
         $claim = $googleService->getUser($token);
         $userEmail = $claim['email'];
