@@ -52,7 +52,6 @@ styling is possible with twig variables:
 ```twig
 {% include '@snoke_oauth/google/button.html.twig' with {theme:'filled_black', text: 'signin_with' %}
 {% include '@snoke_oauth/github/button.html.twig' with {theme:'filled_black', text: 'Sign in with Github' %}
-{% include '@snoke_oauth/facebook/button.html.twig' with {theme:'filled_black', text: 'Sign in with Facebook' %}
 ```
 
 ![](./Docs/Images/buttons_black.PNG)
